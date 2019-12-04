@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ToDoItems from "./ToDoItems";
+import "./ToDoList.css";
 
 class ToDoList extends Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class ToDoList extends Component {
     };
 
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   addItem(e) {
@@ -23,6 +26,17 @@ class ToDoList extends Component {
         };
       });
     }
+
+    this._inputElement.value = "";
+    console.log(this.state.items);
+    e.preventDefault();
+  }
+
+  deleteItem(key) {
+    let filteredItems = this.state.items.filter(item => item.key !== key);
+    this.setState({
+      items: filteredItems
+    });
   }
 
   render() {
@@ -37,6 +51,7 @@ class ToDoList extends Component {
             <button type="submit">Add</button>
           </form>
         </div>
+        <ToDoItems entries={this.state.items} delete={this.deleteItem} />
       </div>
     );
   }
